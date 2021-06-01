@@ -47,13 +47,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_c"
-                style="@style/CalculatorButton.FuncButton"
+                style="@style/CalculatorButton.FuncButton.Landscape"
                 android:layout_columnSpan="2"
                 android:text="@string/btn_C" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_fn"
-                style="@style/CalculatorButton.FuncButton"
+                style="@style/CalculatorButton.FuncButton.Landscape"
                 android:text="@string/btn_fn" />
 
             <com.google.android.material.button.MaterialButton
@@ -118,13 +118,13 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_plus"
-                style="@style/CalculatorButton.FuncButton"
+                style="@style/CalculatorButton.FuncButton.Landscape"
                 android:layout_rowSpan="2"
                 android:text="@string/btn_plus" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_alt"
-                style="@style/CalculatorButton.FuncButton"
+                style="@style/CalculatorButton.FuncButton.Landscape"
                 android:text="@string/btn_alt" />
 
             <com.google.android.material.button.MaterialButton
@@ -134,7 +134,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_dot"
-                style="@style/CalculatorButton.FuncButton"
+                style="@style/CalculatorButton.FuncButton.Landscape"
                 android:text="@string/btn_dot" />
 
         </GridLayout>
