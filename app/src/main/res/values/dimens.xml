@@ -5,4 +5,5 @@
     <dimen name="spacing_0">0dp</dimen>
     <dimen name="padding_4">4dp</dimen>
     <dimen name="padding_16">16dp</dimen>
+    <dimen name="display_text_size">48sp</dimen>
 </resources>

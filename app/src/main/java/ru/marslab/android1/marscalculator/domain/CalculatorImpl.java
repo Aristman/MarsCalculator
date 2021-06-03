@@ -1,4 +1,4 @@
 package ru.marslab.android1.marscalculator.domain;
 
-public interface Calculator {
+public class CalculatorImpl implements Calculator {
 }
