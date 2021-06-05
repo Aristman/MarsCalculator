@@ -9,9 +9,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/main_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/mars_2051748_1280"
-        android:contentDescription="@string/main_image" />
+        android:src="@drawable/mars_2051748_1280" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,7 +23,9 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/enter_display"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="4">
+            app:layout_constraintVertical_weight="4"
+            android:verticalScrollbarPosition="left"
+            >
 
             <TextView
                 android:id="@+id/display"
@@ -34,15 +36,16 @@
                 android:padding="@dimen/padding_16"
                 tools:text="1111111\n2222222\n3333333" />
         </androidx.core.widget.NestedScrollView>
+
         <TextView
             android:id="@+id/enter_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/scroll_display"
-            app:layout_constraintBottom_toTopOf="@id/key_field"
-            android:textSize="@dimen/display_text_size"
             android:textColor="@color/purple_700"
-            tools:text="1234567"/>
+            android:textSize="@dimen/display_text_size"
+            app:layout_constraintBottom_toTopOf="@id/key_field"
+            app:layout_constraintTop_toBottomOf="@id/scroll_display"
+            tools:text="1234567" />
 
         <GridLayout
             android:id="@+id/key_field"
@@ -58,7 +61,8 @@
                 android:id="@+id/button_ac"
                 style="@style/CalculatorButton.FuncButton"
                 android:layout_columnSpan="1"
-                android:text="@string/btn_AC" />
+                android:text="@string/btn_AC"
+                app:cornerRadius="@dimen/spacing_20"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_c"
@@ -134,7 +138,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_plus"
                 style="@style/CalculatorButton.FuncButton"
-                android:layout_rowSpan="2"
+                android:layout_rowSpan="1"
                 android:text="@string/btn_plus" />
 
             <com.google.android.material.button.MaterialButton
@@ -151,6 +155,11 @@
                 android:id="@+id/button_dot"
                 style="@style/CalculatorButton.FuncButton"
                 android:text="@string/btn_dot" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_equ"
+                style="@style/CalculatorButton.FuncButton"
+                android:text="@string/btn_equal" />
 
         </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

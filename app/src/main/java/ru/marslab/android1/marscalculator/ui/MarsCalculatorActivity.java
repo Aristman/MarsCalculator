@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import ru.marslab.android1.marscalculator.MarsCalculator;
 import ru.marslab.android1.marscalculator.R;
 
@@ -33,7 +35,8 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
             R.id.button_multi,
             R.id.button_fn,
             R.id.button_c,
-            R.id.button_ac
+            R.id.button_ac,
+            R.id.button_equ
     };
 
     @Override
@@ -65,13 +68,14 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
         enteringDisplay.setText(number);
     }
 
-    public void showHistoryNumbers(String[] numbers) {
+    @Override
+    public void showHistoryNumbers(ArrayList<String> numbers) {
         StringBuilder text = new StringBuilder();
-        for (int i = 0; i < numbers.length - 1; i++) {
-            text.append(numbers[i]).append("\n");
+        for (String number : numbers) {
+            text.append(number);
         }
-        text.append(numbers[numbers.length - 1]);
         historyDisplay.setText(text);
+        historyDisplay.computeScroll();
     }
 
     @Override

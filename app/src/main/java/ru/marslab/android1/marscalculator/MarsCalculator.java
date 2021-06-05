@@ -10,8 +10,7 @@ public class MarsCalculator {
     private StringBuilder leftPart = new StringBuilder("0");
     private StringBuilder rightPart = new StringBuilder();
     private boolean isDotSet = false;
-
-    private Long enteringNumber = 0L;
+    private boolean isNewNumber = true;
 
     private CalculatorView view;
 
@@ -22,7 +21,7 @@ public class MarsCalculator {
         this.view.showEnteringNumber(getEnterNumber());
     }
 
-    public void detach () {
+    public void detach() {
         view = null;
     }
 
@@ -43,6 +42,10 @@ public class MarsCalculator {
             case "7":
             case "8":
             case "9":
+                if (isNewNumber) {
+                    clearEnterNumber();
+                    isNewNumber = false;
+                }
                 if (leftPart.length() + rightPart.length() <= 12) {
                     if (!isDotSet) {
                         if (leftPart.indexOf(ZERO_STRING) == 0) {
@@ -60,19 +63,23 @@ public class MarsCalculator {
                 isDotSet = true;
                 break;
             case "+":
+                performOperation(Calculator.Operation.ADD);
                 break;
             case "-":
+                performOperation(Calculator.Operation.SUB);
                 break;
             case "/":
+                performOperation(Calculator.Operation.DIV);
                 break;
             case "*":
+                performOperation(Calculator.Operation.MUL);
                 break;
             case "FN":
                 break;
             case "C":
                 if (!isDotSet) {
                     leftPart.deleteCharAt(leftPart.length() - 1);
-                    if (leftPart.length() == 0 ) {
+                    if (leftPart.length() == 0) {
                         leftPart.append(ZERO_STRING);
                     }
                 } else {
@@ -83,10 +90,32 @@ public class MarsCalculator {
                     }
                 }
                 break;
+            case "=":
+                performOperation(Calculator.Operation.EQU);
+                break;
             case "AC":
                 clearAllNumbers();
         }
         view.showEnteringNumber(getEnterNumber());
+    }
+
+    private void performOperation(Calculator.Operation add) {
+        parseToPartsNumber(calculator.operation(getEnterNumber(), add));
+        view.showHistoryNumbers(calculator.getHistoryList());
+        isNewNumber = true;
+    }
+
+    private void parseToPartsNumber(String resultValue) {
+        int indexDot = resultValue.indexOf('.');
+        int lastIndex = resultValue.length() - 1;
+        leftPart = new StringBuilder(resultValue.substring(0, indexDot));
+        if (indexDot == lastIndex - 1 && resultValue.charAt(lastIndex) == '0') {
+            isDotSet = false;
+            rightPart.delete(0, rightPart.length());
+        } else {
+            isDotSet = true;
+            rightPart = new StringBuilder(resultValue.substring(indexDot + 1, lastIndex + 1));
+        }
     }
 
     private String getEnterNumber() {
@@ -99,6 +128,12 @@ public class MarsCalculator {
     }
 
     private void clearAllNumbers() {
+        clearEnterNumber();
+        calculator.clearHistoryList();
+        view.showHistoryNumbers(calculator.getHistoryList());
+    }
+
+    private void clearEnterNumber() {
         leftPart.setLength(0);
         leftPart.append(ZERO_STRING);
         rightPart.setLength(0);
