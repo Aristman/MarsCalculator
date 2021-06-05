@@ -12,5 +12,6 @@
     <color name="calc_button_pink">#9F12B8</color>
     <color name="calc_button_red">#FF0000</color>
     <color name="calc_button_blue">#0000FF</color>
+    <color name="red">#FF0000</color>
 
 </resources>

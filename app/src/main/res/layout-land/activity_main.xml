@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MarsCalculatorActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:id="@+id/scroll_display"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/key_field"
+            app:layout_constraintBottom_toTopOf="@id/enter_display"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="4">
 
@@ -35,6 +35,16 @@
                 tools:text="1111111\n2222222\n3333333" />
         </androidx.core.widget.NestedScrollView>
 
+        <TextView
+            android:id="@+id/enter_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/scroll_display"
+            app:layout_constraintBottom_toTopOf="@id/key_field"
+            android:textSize="@dimen/display_text_size"
+            android:textColor="@color/red"
+            tools:text="1234567"/>
+
         <GridLayout
             android:id="@+id/key_field"
             android:layout_width="match_parent"
@@ -42,13 +52,19 @@
             android:columnCount="4"
             android:padding="@dimen/padding_4"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scroll_display"
+            app:layout_constraintTop_toBottomOf="@id/enter_display"
             app:layout_constraintVertical_weight="10">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_ac"
+                style="@style/CalculatorButton.FuncButton.Landscape"
+                android:layout_columnSpan="1"
+                android:text="@string/btn_AC" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_c"
                 style="@style/CalculatorButton.FuncButton.Landscape"
-                android:layout_columnSpan="2"
+                android:layout_columnSpan="1"
                 android:text="@string/btn_C" />
 
             <com.google.android.material.button.MaterialButton

@@ -1,17 +1,19 @@
-package ru.marslab.android1.marscalculator;
+package ru.marslab.android1.marscalculator.ui;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import ru.marslab.android1.marscalculator.CalculatorPresenter;
+import ru.marslab.android1.marscalculator.R;
 import ru.marslab.android1.marscalculator.domain.ButtonType;
-import ru.marslab.android1.marscalculator.domain.Calculator;
 
-public class MainActivity extends AppCompatActivity {
+public class MarsCalculatorActivity extends AppCompatActivity implements CalculatorView {
 
-    private final Calculator calculator = new Calculator();
-    private TextView display;
+    private CalculatorPresenter calculatorPresenter;
+    private TextView historyDisplay;
+    private TextView enteringDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +21,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initKeyboard();
         initDisplay();
+        calculatorPresenter = new CalculatorPresenter(this);
     }
 
     private void initDisplay() {
-        display = findViewById(R.id.display);
+        enteringDisplay = findViewById(R.id.enter_display);
+        historyDisplay = findViewById(R.id.display);
     }
 
     private void initKeyboard() {
@@ -44,10 +48,15 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_multi).setOnClickListener(v -> clickListener(ButtonType.MUL));
         findViewById(R.id.button_fn).setOnClickListener(v -> clickListener(ButtonType.FN));
         findViewById(R.id.button_c).setOnClickListener(v -> clickListener(ButtonType.C));
+        findViewById(R.id.button_ac).setOnClickListener(v -> clickListener(ButtonType.AC));
     }
 
     private void clickListener(ButtonType buttonType) {
-        calculator.click(buttonType);
-        display.setText(calculator.getDisplay());
+        calculatorPresenter.click(buttonType);
+    }
+
+    @Override
+    public void showEnteringNumber(String number) {
+        enteringDisplay.setText(number);
     }
 }
