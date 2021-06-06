@@ -1,10 +1,12 @@
 package ru.marslab.android1.marscalculator;
 
+import java.io.Serializable;
+
 import ru.marslab.android1.marscalculator.domain.Calculator;
 import ru.marslab.android1.marscalculator.domain.CalculatorImpl;
 import ru.marslab.android1.marscalculator.ui.CalculatorView;
 
-public class MarsCalculator {
+public class MarsCalculator implements Serializable {
     final static String ZERO_STRING = "0";
 
     private StringBuilder leftPart = new StringBuilder("0");
@@ -105,16 +107,16 @@ public class MarsCalculator {
         isNewNumber = true;
     }
 
-    private void parseToPartsNumber(String resultValue) {
-        int indexDot = resultValue.indexOf('.');
-        int lastIndex = resultValue.length() - 1;
-        leftPart = new StringBuilder(resultValue.substring(0, indexDot));
-        if (indexDot == lastIndex - 1 && resultValue.charAt(lastIndex) == '0') {
+    private void parseToPartsNumber(String value) {
+        int indexDot = value.indexOf('.');
+        int lastIndex = value.length() - 1;
+        leftPart = new StringBuilder(value.substring(0, indexDot));
+        if (indexDot == lastIndex - 1 && value.charAt(lastIndex) == '0') {
             isDotSet = false;
             rightPart.delete(0, rightPart.length());
         } else {
             isDotSet = true;
-            rightPart = new StringBuilder(resultValue.substring(indexDot + 1, lastIndex + 1));
+            rightPart = new StringBuilder(value.substring(indexDot + 1, lastIndex + 1));
         }
     }
 

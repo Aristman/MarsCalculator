@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import ru.marslab.android1.marscalculator.MarsCalculator;
 import ru.marslab.android1.marscalculator.R;
 
 public class MarsCalculatorActivity extends AppCompatActivity implements CalculatorView {
+    private static final String HISTORY_KEY = "history_key";
+    private static final String ENTER_NUMBER_KEY = "enter_number";
+    private static final String CALCULATOR_KEY = "calculator";
 
     private MarsCalculator calculator;
     private TextView historyDisplay;
@@ -45,8 +49,22 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
         setContentView(R.layout.activity_main);
         initKeyboard();
         initDisplay();
-        calculator = new MarsCalculator();
+        if (savedInstanceState == null) {
+            calculator = new MarsCalculator();
+        } else {
+            historyDisplay.setText(savedInstanceState.getString(HISTORY_KEY));
+            enteringDisplay.setText(savedInstanceState.getString(ENTER_NUMBER_KEY));
+            calculator = (MarsCalculator) savedInstanceState.getSerializable(CALCULATOR_KEY);
+        }
         calculator.attach(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(HISTORY_KEY, historyDisplay.getText().toString());
+        outState.putString(ENTER_NUMBER_KEY, enteringDisplay.getText().toString());
+        outState.putSerializable(CALCULATOR_KEY, calculator);
+        super.onSaveInstanceState(outState);
     }
 
     private void initDisplay() {
