@@ -8,10 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="display_text">#FFFF55</color>
-    <color name="calc_button_green">#348537</color>
-    <color name="calc_button_pink">#9F12B8</color>
-    <color name="calc_button_red">#FF0000</color>
+    <color name="calc_button_green">#51B855</color>
+    <color name="calc_button_pink">#DFC2E4</color>
+    <color name="calc_button_gray_50">#50707070</color>
+    <color name="calc_button_clear">#00000000</color>
     <color name="calc_button_blue">#0000FF</color>
     <color name="red">#FF0000</color>
+    <color name="button_text_color">#096709</color>
 
 </resources>

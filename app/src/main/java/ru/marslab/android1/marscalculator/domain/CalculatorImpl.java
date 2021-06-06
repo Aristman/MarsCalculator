@@ -15,12 +15,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public String operation(String number, Operation operation) {
         double value = Double.parseDouble(number);
-        HistoryItem prevItem;
-        if (historyNumbers.isEmpty()) {
-            prevItem = new HistoryItem(0D, Operation.END);
-        } else {
-            prevItem = historyNumbers.get(historyNumbers.size() - 1);
-        }
+        HistoryItem prevItem = getLastHistoryItemOrEmpty();
         if (prevItem.operation == Operation.END) {
             subTotal = value;
         }
@@ -35,6 +30,9 @@ public class CalculatorImpl implements Calculator {
                 subTotal *= value;
                 break;
             case DIV:
+                if (value == 0) {
+                    return String.valueOf(value);
+                }
                 subTotal /= value;
                 break;
         }
@@ -45,6 +43,16 @@ public class CalculatorImpl implements Calculator {
             historyNumbers.add(new HistoryItem(value, operation));
         }
         return String.valueOf(subTotal);
+    }
+
+    private HistoryItem getLastHistoryItemOrEmpty() {
+        HistoryItem item;
+        if (historyNumbers.isEmpty()) {
+            item = new HistoryItem(0D, Operation.END);
+        } else {
+            item = historyNumbers.get(historyNumbers.size() - 1);
+        }
+        return item;
     }
 
     @Override
