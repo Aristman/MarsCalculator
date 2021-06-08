@@ -9,24 +9,24 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarsCalculator">
-        <activity android:name=".ui.MarsCalculatorActivity"
-            android:launchMode="singleTop">
+        <activity
+            android:name=".ui.MarsCalculatorActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:label="@string/calculator_launch">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="mars"
-                    android:scheme="calculator" />
+                    android:host="calculator"
+                    android:scheme="mars" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ChoosingThemeActivity"/>
+        <activity android:name=".ui.ChoosingThemeActivity" />
     </application>
 
 </manifest>
