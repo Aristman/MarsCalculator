@@ -7,4 +7,6 @@ public interface CalculatorView {
     void showEnteringNumber(String number);
 
     void showHistoryNumbers(ArrayList<String> numbers);
+
+    void launchChoosingTheme();
 }

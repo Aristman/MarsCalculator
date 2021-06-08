@@ -22,4 +22,7 @@
     <string name="main_image">background image</string>
     <string name="btn_AC">AC</string>
     <string name="calculator_launch">Mars Calculator</string>
+    <string name="theme_1">Стандартная тема</string>
+    <string name="theme_2">Тема с тулбаром</string>
+    <string name="btn_set_theme">Установить тему</string>
 </resources>

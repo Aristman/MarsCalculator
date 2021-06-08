@@ -1,12 +1,15 @@
 package ru.marslab.android1.marscalculator;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 import ru.marslab.android1.marscalculator.domain.Calculator;
 import ru.marslab.android1.marscalculator.domain.CalculatorImpl;
 import ru.marslab.android1.marscalculator.ui.CalculatorView;
 
-public class MarsCalculator implements Serializable {
+public class MarsCalculator implements Parcelable {
     final static String ZERO_STRING = "0";
 
     private StringBuilder leftPart = new StringBuilder("0");
@@ -18,9 +21,41 @@ public class MarsCalculator implements Serializable {
 
     private final Calculator calculator = new CalculatorImpl();
 
+    public MarsCalculator(Parcel in) {
+        isDotSet = in.readByte() != 0;
+        isNewNumber = in.readByte() != 0;
+    }
+
+    public MarsCalculator() {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (isDotSet ? 1 : 0));
+        dest.writeByte((byte) (isNewNumber ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MarsCalculator> CREATOR = new Creator<MarsCalculator>() {
+        @Override
+        public MarsCalculator createFromParcel(Parcel in) {
+            return new MarsCalculator(in);
+        }
+
+        @Override
+        public MarsCalculator[] newArray(int size) {
+            return new MarsCalculator[size];
+        }
+    };
+
     public void attach(CalculatorView view) {
         this.view = view;
         this.view.showEnteringNumber(getEnterNumber());
+        this.view.showHistoryNumbers(calculator.getHistoryList());
     }
 
     public void detach() {
@@ -77,6 +112,7 @@ public class MarsCalculator implements Serializable {
                 performOperation(Calculator.Operation.MUL);
                 break;
             case "FN":
+                view.launchChoosingTheme();
                 break;
             case "C":
                 if (!isDotSet) {

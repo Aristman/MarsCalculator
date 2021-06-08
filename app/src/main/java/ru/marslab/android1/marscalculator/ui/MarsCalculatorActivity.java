@@ -1,9 +1,12 @@
 package ru.marslab.android1.marscalculator.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,10 +16,10 @@ import ru.marslab.android1.marscalculator.MarsCalculator;
 import ru.marslab.android1.marscalculator.R;
 
 public class MarsCalculatorActivity extends AppCompatActivity implements CalculatorView {
-    private static final String HISTORY_KEY = "history_key";
-    private static final String ENTER_NUMBER_KEY = "enter_number";
     private static final String CALCULATOR_KEY = "calculator";
+    static final String THEME_KEY = "theme_key";
 
+    private int currentTheme;
     private MarsCalculator calculator;
     private TextView historyDisplay;
     private TextView enteringDisplay;
@@ -43,27 +46,58 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
             R.id.button_equ
     };
 
+    ActivityResultLauncher<Intent> chooseThemeLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == RESULT_OK) {
+                            if (result.getData() != null) {
+                                int themeId = result.getData().getIntExtra(THEME_KEY, 1);
+                                if (themeId == R.id.theme_1) {
+                                    currentTheme = 1;
+                                } else if (themeId == R.id.theme_2) {
+                                    currentTheme = 2;
+                                }
+                            }
+                        }
+                        Intent newMainIntent = new Intent(
+                                this,
+                                MarsCalculatorActivity.class
+                        );
+                        newMainIntent.putExtra(CALCULATOR_KEY, calculator);
+                        newMainIntent.putExtra(THEME_KEY, currentTheme);
+                        startActivity(newMainIntent);
+                    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            currentTheme = 1;
+            calculator = new MarsCalculator();
+        } else {
+            currentTheme = savedInstanceState.getInt(THEME_KEY);
+            calculator = (MarsCalculator) savedInstanceState.getParcelable(CALCULATOR_KEY);
+        }
+        switchTheme();
         setContentView(R.layout.activity_main);
         initKeyboard();
         initDisplay();
-        if (savedInstanceState == null) {
-            calculator = new MarsCalculator();
-        } else {
-            historyDisplay.setText(savedInstanceState.getString(HISTORY_KEY));
-            enteringDisplay.setText(savedInstanceState.getString(ENTER_NUMBER_KEY));
-            calculator = (MarsCalculator) savedInstanceState.getSerializable(CALCULATOR_KEY);
-        }
         calculator.attach(this);
+    }
+
+    private void switchTheme() {
+        if (currentTheme == 1) {
+            setTheme(R.style.Theme_MarsCalculator);
+        } else {
+            setTheme(R.style.Widget_AppCompat_Light_ActionBar);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString(HISTORY_KEY, historyDisplay.getText().toString());
-        outState.putString(ENTER_NUMBER_KEY, enteringDisplay.getText().toString());
-        outState.putSerializable(CALCULATOR_KEY, calculator);
+        outState.putInt(THEME_KEY, currentTheme);
+        outState.putParcelable(CALCULATOR_KEY, calculator);
         super.onSaveInstanceState(outState);
     }
 
@@ -93,7 +127,13 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
             text.append(number);
         }
         historyDisplay.setText(text);
-        historyDisplay.computeScroll();
+    }
+
+    @Override
+    public void launchChoosingTheme() {
+        Intent intent = new Intent(this, ChoosingThemeActivity.class);
+        intent.putExtra(THEME_KEY, currentTheme);
+        chooseThemeLauncher.launch(intent);
     }
 
     @Override
