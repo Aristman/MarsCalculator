@@ -87,10 +87,13 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
     }
 
     private void switchTheme() {
-        if (currentTheme == 1) {
-            setTheme(R.style.Theme_MarsCalculator);
-        } else {
-            setTheme(R.style.Widget_AppCompat_Light_ActionBar);
+        if (getIntent() != null) {
+            int theme = getIntent().getIntExtra(THEME_KEY, 1);
+            if (theme == 1) {
+                setTheme(R.style.Theme_MarsCalculator);
+            } else {
+                setTheme(R.style.Widget_AppCompat_Light_ActionBar);
+            }
         }
     }
 
