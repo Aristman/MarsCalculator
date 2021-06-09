@@ -16,6 +16,9 @@ import ru.marslab.android1.marscalculator.MarsCalculator;
 import ru.marslab.android1.marscalculator.R;
 
 public class MarsCalculatorActivity extends AppCompatActivity implements CalculatorView {
+    private static final int THEME_1 = 1;
+    private static final int THEME_2 = 2;
+
     private static final String CALCULATOR_KEY = "calculator";
     static final String THEME_KEY = "theme_key";
 
@@ -52,11 +55,11 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
                     result -> {
                         if (result.getResultCode() == RESULT_OK) {
                             if (result.getData() != null) {
-                                int themeId = result.getData().getIntExtra(THEME_KEY, 1);
+                                int themeId = result.getData().getIntExtra(THEME_KEY, THEME_1);
                                 if (themeId == R.id.theme_1) {
-                                    currentTheme = 1;
-                                } else if (themeId == R.id.theme_2) {
-                                    currentTheme = 2;
+                                    currentTheme = THEME_1;
+                                } else {
+                                    currentTheme = THEME_2;
                                 }
                             }
                         }
@@ -73,7 +76,7 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            currentTheme = 1;
+            currentTheme = THEME_1;
             calculator = new MarsCalculator();
         } else {
             currentTheme = savedInstanceState.getInt(THEME_KEY);
@@ -88,8 +91,8 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
 
     private void switchTheme() {
         if (getIntent() != null) {
-            int theme = getIntent().getIntExtra(THEME_KEY, 1);
-            if (theme == 1) {
+            int theme = getIntent().getIntExtra(THEME_KEY, THEME_1);
+            if (theme == THEME_1) {
                 setTheme(R.style.Theme_MarsCalculator);
             } else {
                 setTheme(R.style.Widget_AppCompat_Light_ActionBar);
