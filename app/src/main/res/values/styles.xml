@@ -9,18 +9,19 @@
         <item name="android:layout_marginEnd">@dimen/spacing_2</item>
         <item name="android:layout_marginStart">@dimen/spacing_2</item>
         <item name="android:textSize">@dimen/main_text_size</item>
+        <item name="android:textColor">@color/button_text_color</item>
     </style>
 
     <style name="CalculatorButton.NumericButton" parent="CalculatorButton">
-        <item name="backgroundTint">@color/calc_button_green</item>
+        <item name="backgroundTint">@color/button_selector</item>
+        <item name="android:background">@drawable/stone2</item>
+        <item name="backgroundTintMode">src_atop</item>
     </style>
 
     <style name="CalculatorButton.FuncButton" parent="CalculatorButton">
-        <item name="backgroundTint">@color/calc_button_pink</item>
-    </style>
-
-    <style name="CalculatorButton.FuncButton.Landscape" parent="CalculatorButton">
-        <item name="backgroundTint">@color/calc_button_blue</item>
+        <item name="backgroundTint">@color/button_selector</item>
+        <item name="android:background">@drawable/stone1</item>
+        <item name="backgroundTintMode">src_atop</item>
     </style>
 
     <style name="display_text">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.marslab.android1.marscalculator" >
+    package="ru.marslab.android1.marscalculator">
 
     <application
         android:allowBackup="true"
@@ -8,14 +8,25 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MarsCalculator" >
-        <activity android:name=".ui.MarsCalculatorActivity" >
+        android:theme="@style/Theme.MarsCalculator">
+        <activity
+            android:name=".ui.MarsCalculatorActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="calculator"
+                    android:scheme="mars" />
+            </intent-filter>
         </activity>
+        <activity android:name=".ui.ChoosingThemeActivity" />
     </application>
 
 </manifest>
