@@ -69,6 +69,7 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
                         );
                         newMainIntent.putExtra(CALCULATOR_KEY, calculator);
                         newMainIntent.putExtra(THEME_KEY, currentTheme);
+                        finish();
                         startActivity(newMainIntent);
                     });
 
@@ -80,7 +81,7 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
             calculator = new MarsCalculator();
         } else {
             currentTheme = savedInstanceState.getInt(THEME_KEY);
-            calculator = (MarsCalculator) savedInstanceState.getParcelable(CALCULATOR_KEY);
+            calculator = savedInstanceState.getParcelable(CALCULATOR_KEY);
         }
         switchTheme();
         setContentView(R.layout.activity_main);
@@ -91,8 +92,8 @@ public class MarsCalculatorActivity extends AppCompatActivity implements Calcula
 
     private void switchTheme() {
         if (getIntent() != null) {
-            int theme = getIntent().getIntExtra(THEME_KEY, THEME_1);
-            if (theme == THEME_1) {
+            currentTheme = getIntent().getIntExtra(THEME_KEY, THEME_1);
+            if (currentTheme == THEME_1) {
                 setTheme(R.style.Theme_MarsCalculator);
             } else {
                 setTheme(R.style.Widget_AppCompat_Light_ActionBar);
